@@ -30,6 +30,18 @@ namespace TodoApi
             #endregion
 
             services.AddControllers();
+
+            // configure CORS
+            services.AddCors(options =>
+                {
+                    options.AddPolicy("DevAllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                    });
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +51,7 @@ namespace TodoApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("DevAllowAll");
 
             app.UseHttpsRedirection();
 
